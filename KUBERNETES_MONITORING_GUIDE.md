@@ -19,8 +19,10 @@ This guide documents the complete process of deploying the Event Registration ap
     ```powershell
     docker build -t event-registration:latest .
     ```
-4.  **Deployed Services**:
-    *   **Namespace**: Created `event-app` and `monitoring` namespaces.
+5.  **Enabled Metrics Server**: Turned on the metrics pipeline for dashboard & CLI stats.
+    ```powershell
+    minikube addons enable metrics-server
+    ```
     *   **Prometheus**: Deployed ConfigMap, RBAC, Deployment, and Service.
     *   **Grafana**: Deployed ConfigMap (Dashboards/Datasources), Deployment, and Service.
     *   **Application**: Deployed MongoDB (Cloud Atlas connected) and the Node.js App.
