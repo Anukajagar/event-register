@@ -140,6 +140,32 @@ Then open http://localhost:3000
 | GET | `/metrics` | Prometheus metrics |
 | GET | `/health` | Health check |
 
+## 🔄 Daily Restart Routine (How to start again)
+
+If you restart your computer, follow these steps to bring the app back up:
+
+1.  **Start Minikube**:
+    ```powershell
+    minikube start
+    ```
+
+2.  **Open Access Tunnels** (Run each in a NEW terminal window):
+    ```powershell
+    # Terminal 1: App
+    minikube service event-registration -n event-app --url
+
+    # Terminal 2: Grafana (Login: admin/admin123)
+    minikube service grafana -n monitoring --url
+
+    # Terminal 3: Prometheus
+    minikube service prometheus -n monitoring --url
+    ```
+
+3.  **Stop when done**:
+    ```powershell
+    minikube stop
+    ```
+
 ## 🏗️ Architecture
 
 ```
