@@ -1,0 +1,101 @@
+# MongoDB Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb
+  namespace: event-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+      - name: mongodb
+        image: mongo:6.0
+        ports:
+        - containerPort: 27017
+        env:
+        - name: MONGO_INITDB_DATABASE
+          value: event
+        volumeMounts:
+        - name: mongo-storage
+          mountPath: /data/db
+      volumes:
+      - name: mongo-storage
+        emptyDir: {}
+---
+# MongoDB Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+  namespace: event-app
+spec:
+  selector:
+    app: mongodb
+  ports:
+  - port: 27017
+    targetPort: 27017
+  type: ClusterIP
+---
+# Event Registration App Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: event-registration
+  namespace: event-app
+  labels:
+    app: event-registration
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: event-registration
+  template:
+    metadata:
+      labels:
+        app: event-registration
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "3000"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+      - name: event-registration
+        image: event-registration:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3000
+        env:
+        - name: MONGODB_URI
+          value: "mongodb+srv://02fe23bcs084_db_user:gdIfM5hTrZ79lwMz@anushri.dcyewix.mongodb.net/event"
+        - name: PORT
+          value: "3000"
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+---
+# Event Registration Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: event-registration
+  namespace: event-app
+  labels:
+    app: event-registration
+spec:
+  selector:
+    app: event-registration
+  ports:
+  - port: 80
+    targetPort: 3000
+  type: NodePort

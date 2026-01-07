@@ -1,0 +1,11 @@
+# Namespace for the Event Registration Application
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: event-app
+---
+# Namespace for Monitoring Stack
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: monitoring

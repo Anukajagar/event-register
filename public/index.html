@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Event Registration System - Register for upcoming events">
+  <title>Event Registration</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📅 Event Registration</h1>
+      <p>Register for our upcoming events</p>
+    </header>
+
+    <!-- Registration Form -->
+    <section class="form-section">
+      <h2 id="form-title">Register New Participant</h2>
+      <form id="registration-form">
+        <input type="hidden" id="participant-id">
+        
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+        </div>
+
+        <div class="form-group">
+          <label for="eventName">Event Name</label>
+          <select id="eventName" name="eventName" required>
+            <option value="">Select an event</option>
+            <option value="Tech Conference 2026">Tech Conference 2026</option>
+            <option value="Web Development Workshop">Web Development Workshop</option>
+            <option value="AI/ML Summit">AI/ML Summit</option>
+            <option value="Startup Meetup">Startup Meetup</option>
+          </select>
+        </div>
+
+        <div class="form-buttons">
+          <button type="submit" id="submit-btn" class="btn btn-primary">Register</button>
+          <button type="button" id="cancel-btn" class="btn btn-secondary" style="display: none;">Cancel</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Participants List -->
+    <section class="list-section">
+      <h2>Registered Participants</h2>
+      <div id="loading" class="loading">Loading participants...</div>
+      <div id="participants-list" class="participants-list"></div>
+      <p id="no-participants" class="no-data" style="display: none;">No participants registered yet.</p>
+    </section>
+
+    <!-- Notification -->
+    <div id="notification" class="notification"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
